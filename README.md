@@ -22,6 +22,21 @@ Point it at a markdown file, pick a visual style, and it generates a full-screen
 | Sunset Magazine | Peach and coral gradients, Instrument Serif |
 | Midnight Galaxy | Deep violet, Space Grotesk, glowing accents |
 
+## Previews
+
+<table>
+<tr>
+<td align="center"><img src="screenshots/terminal-hero.png" width="310" /><br/><sub>Terminal Retro — hero</sub></td>
+<td align="center"><img src="screenshots/galaxy-hero.png" width="310" /><br/><sub>Midnight Galaxy — hero</sub></td>
+<td align="center"><img src="screenshots/brutalist-hero.png" width="310" /><br/><sub>Brutalist Monochrome — hero</sub></td>
+</tr>
+<tr>
+<td align="center"><img src="screenshots/terminal-content.png" width="310" /></td>
+<td align="center"><img src="screenshots/galaxy-content.png" width="310" /></td>
+<td align="center"><img src="screenshots/brutalist-content.png" width="310" /></td>
+</tr>
+</table>
+
 ## Slide types
 
 Seven layouts are available: hero, section-divider, content, cards, split, diagram, and quote. The skill infers the right type from your markdown structure, or you can use fenced blocks to be explicit.
