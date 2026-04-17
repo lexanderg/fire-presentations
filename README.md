@@ -1,7 +1,5 @@
 <img width="1021" height="94" alt="image" src="https://github.com/user-attachments/assets/9a24b923-3c86-4922-8ed3-7d094847ab7d" />
 
-```
-
 A Claude Code skill that turns a markdown file into a slide deck. The output is a single self-contained HTML file with no build step, no dependencies, and no framework — just open it in a browser.
 
 ## What it does
@@ -34,9 +32,17 @@ Plain markdown works fine:
 - An H2 with bullets becomes a content slide
 - Two columns separated by `||` become a split slide
 
+## Install
+
+```bash
+npx skills add lexanderg/fire-presentations
+```
+
+That's it. The skill is added to your Claude Code setup and `/fire-presentations` is available straight away.
+
 ## Usage
 
-Install it as a Claude Code plugin by adding this to your `settings.json`:
+Or install manually by adding this to your `settings.json`:
 
 ```json
 "plugins": [
