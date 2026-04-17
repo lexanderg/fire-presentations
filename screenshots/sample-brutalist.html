@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>fire-presentations — Brutalist Monochrome</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F4F4F2;
+    --surface: #FFFFFF;
+    --surface-2: #E8E8E4;
+    --text: #0A0A0A;
+    --text-dim: #555555;
+    --accent: #0A0A0A;
+    --accent-2: #FF3B30;
+    --border: rgba(10,10,10,0.12);
+    --hero-bg: #0A0A0A;
+    --hero-text: #F4F4F2;
+    --hero-accent: #FF3B30;
+    --font-display: 'Inter', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --display-weight: 900;
+    --heading-weight: 800;
+    --body-weight: 400;
+    --letter-tight: -3px;
+    --radius: 0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { font-family: var(--font-body); color: var(--text); background: var(--bg); overflow: hidden; height: 100%; -webkit-font-smoothing: antialiased; }
+
+  .deck { height: 100dvh; overflow-y: auto; scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+  .slide { height: 100dvh; scroll-snap-align: start; overflow: hidden; position: relative; display: flex; flex-direction: column; justify-content: center; padding: clamp(40px,6vh,80px) clamp(60px,8vw,120px); isolation: isolate; opacity: 0; transform: translateY(20px); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); }
+  .slide.visible { opacity: 1; transform: none; }
+  .reveal { opacity: 0; transform: translateY(14px); transition: opacity 0.6s cubic-bezier(0.16,1,0.3,1), transform 0.6s cubic-bezier(0.16,1,0.3,1); }
+  .slide.visible .reveal { opacity: 1; transform: none; }
+  .slide.visible .reveal:nth-child(1) { transition-delay: 0.1s; }
+  .slide.visible .reveal:nth-child(2) { transition-delay: 0.2s; }
+  .slide.visible .reveal:nth-child(3) { transition-delay: 0.3s; }
+  .slide.visible .reveal:nth-child(4) { transition-delay: 0.4s; }
+  .slide.visible .reveal:nth-child(5) { transition-delay: 0.5s; }
+  @media (prefers-reduced-motion: reduce) { .slide, .reveal { opacity: 1 !important; transform: none !important; transition: none !important; } }
+
+  .slide__display { font-family: var(--font-display); font-size: clamp(56px,11vw,140px); font-weight: var(--display-weight); letter-spacing: var(--letter-tight); line-height: 0.92; text-transform: uppercase; }
+  .slide__heading { font-family: var(--font-display); font-size: clamp(32px,5.5vw,72px); font-weight: var(--heading-weight); letter-spacing: -2px; line-height: 1.0; text-transform: uppercase; }
+  .slide__subheading, .slide__subtitle { font-family: var(--font-body); font-size: clamp(15px,1.8vw,20px); line-height: 1.6; color: var(--text-dim); max-width: 640px; margin-top: clamp(16px,2.5vh,28px); }
+  .slide__label { font-family: var(--font-mono); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 2.5px; color: var(--accent-2); margin-bottom: clamp(14px,2vh,22px); }
+  .slide__bullets { list-style: none; margin-top: clamp(16px,3vh,32px); max-width: 720px; }
+  .slide__bullets li { position: relative; padding: 10px 0 10px 24px; font-size: clamp(15px,1.8vw,19px); line-height: 1.5; color: var(--text-dim); border-bottom: 1px solid var(--border); font-weight: 500; }
+  .slide__bullets li:last-child { border-bottom: none; }
+  .slide__bullets li::before { content: '—'; position: absolute; left: 0; top: 10px; color: var(--accent-2); font-weight: 900; }
+  .slide__caption { margin-top: clamp(16px,3vh,28px); font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); letter-spacing: 1.5px; text-transform: uppercase; }
+
+  .slide--hero, .slide--divider { background: var(--hero-bg); color: var(--hero-text); justify-content: center; align-items: flex-start; text-align: left; }
+  .slide--hero .slide__display { color: var(--hero-text); }
+  .slide--hero .slide__subtitle, .slide--divider .slide__subtitle { color: rgba(244,244,242,0.55); }
+  .hero__eyebrow { font-family: var(--font-mono); font-size: 11px; font-weight: 600; color: var(--hero-accent); margin-bottom: clamp(32px,5vh,56px); letter-spacing: 2.5px; text-transform: uppercase; }
+  .hero__meta { font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--hero-accent); margin-top: clamp(28px,4vh,48px); }
+  .hero__accent-bar { width: clamp(40px,5vw,80px); height: 4px; background: var(--hero-accent); margin-bottom: clamp(24px,4vh,40px); }
+  .divider__tag { display: inline-block; background: rgba(255,59,48,0.15); color: var(--hero-accent); font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 8px 18px; margin-bottom: clamp(20px,3vh,36px); border: 1px solid rgba(255,59,48,0.3); }
+
+  .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 2px; margin-top: clamp(28px,4vh,48px); background: var(--border); }
+  .card { background: var(--surface); padding: clamp(18px,2.5vh,28px) clamp(16px,2vw,24px); display: flex; flex-direction: column; gap: 10px; }
+  .card__title { font-family: var(--font-display); font-size: clamp(14px,1.5vw,16px); font-weight: 800; color: var(--text); text-transform: uppercase; letter-spacing: -0.5px; }
+  .card__badge { align-self: flex-start; background: var(--text); color: var(--bg); font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 10px; }
+  .card__body { font-size: clamp(12px,1.2vw,13px); line-height: 1.55; color: var(--text-dim); }
+
+  .flow { display: flex; align-items: center; justify-content: flex-start; gap: 0; margin-top: clamp(28px,4vh,48px); flex-wrap: wrap; }
+  .flow__node { background: var(--surface); border: 2px solid var(--text); padding: clamp(12px,1.8vh,20px) clamp(14px,1.8vw,22px); font-family: var(--font-display); font-weight: 800; font-size: clamp(13px,1.5vw,16px); color: var(--text); text-align: center; text-transform: uppercase; letter-spacing: -0.5px; }
+  .flow__node small { display: block; font-family: var(--font-mono); font-size: 10px; color: var(--text-dim); margin-top: 4px; font-weight: 400; letter-spacing: 1px; text-transform: uppercase; }
+  .flow__arrow { width: 40px; height: 2px; background: var(--accent-2); flex-shrink: 0; position: relative; }
+  .flow__arrow::after { content: ''; position: absolute; right: -1px; top: -4px; width: 0; height: 0; border-left: 8px solid var(--accent-2); border-top: 5px solid transparent; border-bottom: 5px solid transparent; }
+
+  .split-grid { display: grid; grid-template-columns: 1fr auto 1fr; gap: clamp(20px,2.5vw,40px); align-items: start; margin-top: clamp(28px,4vh,48px); }
+  .split-col { padding: clamp(16px,2.5vh,24px) clamp(14px,2vw,22px); border: 2px solid var(--border); }
+  .split-col--b { border-color: var(--text); }
+  .split__title { font-family: var(--font-display); font-size: clamp(16px,1.8vw,22px); font-weight: 800; margin-bottom: 12px; color: var(--text); text-transform: uppercase; letter-spacing: -1px; }
+  .split-col--b .split__title { color: var(--accent-2); }
+  .split__body { font-size: clamp(12px,1.3vw,14px); line-height: 1.65; color: var(--text-dim); }
+  .split__body code { font-family: var(--font-mono); font-size: 0.85em; background: var(--surface-2); padding: 1px 5px; color: var(--text); }
+  .split-divider { display: flex; flex-direction: column; align-items: center; color: var(--accent-2); padding-top: 20px; font-weight: 900; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; font-family: var(--font-mono); }
+
+  .deck-dots { position: fixed; right: clamp(16px,2vw,28px); top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 8px; z-index: 100; }
+  .deck-dot { width: 8px; height: 8px; background: rgba(10,10,10,0.2); border: none; padding: 0; cursor: pointer; transition: all 0.25s ease; }
+  body.current-hero .deck-dot { background: rgba(244,244,242,0.25); }
+  .deck-dot.active { background: var(--accent) !important; transform: scale(1.4); }
+  body.current-hero .deck-dot.active { background: var(--hero-accent) !important; }
+  .deck-counter { position: fixed; bottom: clamp(16px,2.5vh,32px); left: clamp(40px,5vw,80px); font-family: var(--font-mono); font-size: 11px; letter-spacing: 1px; color: var(--text-dim); z-index: 100; }
+  body.current-hero .deck-counter { color: rgba(244,244,242,0.4); }
+  .deck-hints { position: fixed; bottom: clamp(16px,2.5vh,32px); left: 50%; transform: translateX(-50%); font-family: var(--font-mono); font-size: 11px; letter-spacing: 1px; color: var(--text-dim); opacity: 0.5; z-index: 100; transition: opacity 0.5s; white-space: nowrap; }
+  .deck-hints.faded { opacity: 0; pointer-events: none; }
+
+  @media (max-width: 900px) { .slide { padding: 40px 24px; } .cards-grid { grid-template-columns: 1fr; } .split-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="deck">
+
+  <section class="slide slide--hero">
+    <p class="hero__eyebrow reveal">Claude Code Skill</p>
+    <div class="hero__accent-bar reveal"></div>
+    <h1 class="slide__display reveal">fire-<br>presen-<br>tations</h1>
+    <p class="slide__subtitle reveal">Markdown in. Single HTML file out. Zero build step.</p>
+    <p class="hero__meta reveal">FIVE STYLES · SEVEN LAYOUTS · ONE COMMAND</p>
+  </section>
+
+  <section class="slide slide--divider">
+    <div class="divider__tag reveal">THE IDEA</div>
+    <h1 class="slide__display reveal">Write once.<br>Present anywhere.</h1>
+    <p class="slide__subtitle reveal">Your deck lives in a single file. No app required. Version control friendly.</p>
+  </section>
+
+  <section class="slide slide--diagram">
+    <div class="reveal">
+      <div class="slide__label">Pipeline</div>
+      <h2 class="slide__heading">Three steps</h2>
+      <p class="slide__subheading">The skill handles everything between your markdown and the final file.</p>
+    </div>
+    <div class="flow reveal">
+      <div class="flow__node">Markdown<small>your .md file</small></div>
+      <div class="flow__arrow"></div>
+      <div class="flow__node">/fire-presentations<small>Claude skill</small></div>
+      <div class="flow__arrow"></div>
+      <div class="flow__node">HTML file<small>open in browser</small></div>
+    </div>
+    <p class="slide__caption reveal">keyboard nav · scroll-snap · reveal animations · fully responsive</p>
+  </section>
+
+  <section class="slide slide--cards">
+    <div class="reveal">
+      <div class="slide__label">Styles</div>
+      <h2 class="slide__heading">Five visual presets</h2>
+    </div>
+    <div class="cards-grid reveal">
+      <article class="card">
+        <div class="card__badge">01</div>
+        <h3 class="card__title">Brutalist Monochrome</h3>
+        <p class="card__body">This one. Black and white, Inter 900, no rounded corners.</p>
+      </article>
+      <article class="card">
+        <div class="card__badge">02</div>
+        <h3 class="card__title">Editorial Serif</h3>
+        <p class="card__body">Warm paper tones, Playfair Display. Magazine feel.</p>
+      </article>
+      <article class="card">
+        <div class="card__badge">03</div>
+        <h3 class="card__title">Terminal Retro</h3>
+        <p class="card__body">Dark bg, bright green JetBrains Mono. Retro console.</p>
+      </article>
+      <article class="card">
+        <div class="card__badge">04</div>
+        <h3 class="card__title">Sunset Magazine</h3>
+        <p class="card__body">Peach and coral, Instrument Serif. Kinfolk meets summer.</p>
+      </article>
+      <article class="card">
+        <div class="card__badge">05</div>
+        <h3 class="card__title">Midnight Galaxy</h3>
+        <p class="card__body">Deep violet, Space Grotesk. Glowing accents.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="slide slide--content">
+    <div class="reveal">
+      <div class="slide__label">Slide Types</div>
+      <h2 class="slide__heading">Seven layouts</h2>
+      <p class="slide__subheading">The skill infers layout from your markdown structure. H1 alone becomes hero. H2 with bullets becomes content. No configuration needed.</p>
+    </div>
+    <ul class="slide__bullets reveal">
+      <li>hero — full-bleed opening or closing</li>
+      <li>section-divider — major section transition</li>
+      <li>content — heading + body + bullets</li>
+      <li>cards — 2 to 4 items in a grid</li>
+      <li>split — two-column comparison</li>
+      <li>diagram — flow with nodes and arrows</li>
+      <li>quote — centered pull quote</li>
+    </ul>
+  </section>
+
+  <section class="slide slide--split">
+    <div class="reveal">
+      <div class="slide__label">Before / After</div>
+      <h2 class="slide__heading">The difference</h2>
+    </div>
+    <div class="split-grid reveal">
+      <div class="split-col">
+        <h3 class="split__title">Old way</h3>
+        <p class="split__body">Open a slide app. Drag boxes. Export PDF. Repeat every time something changes. The deck lives in a proprietary format you can't diff.</p>
+      </div>
+      <div class="split-divider">VS</div>
+      <div class="split-col split-col--b">
+        <h3 class="split__title">Now</h3>
+        <p class="split__body">Write markdown. Run <code>/fire-presentations</code>. Share the HTML file. Edit the markdown, regenerate in seconds. Lives in git like everything else.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide slide--hero">
+    <p class="hero__eyebrow reveal">Install</p>
+    <div class="hero__accent-bar reveal"></div>
+    <h1 class="slide__display reveal" style="font-size:clamp(32px,5vw,64px);letter-spacing:-2px;">npx skills add<br>lexanderg/<br>fire-presentations</h1>
+    <p class="slide__subtitle reveal" style="color:rgba(244,244,242,0.55);">Then type /fire-presentations in Claude Code.</p>
+    <p class="hero__meta reveal">github.com/lexanderg/fire-presentations</p>
+  </section>
+
+</div>
+<script>
+  function SlideEngine() {
+    this.deck = document.querySelector('.deck');
+    this.slides = [].slice.call(document.querySelectorAll('.slide'));
+    this.current = 0; this.total = this.slides.length;
+    this.buildChrome(); this.bindEvents(); this.observe(); this.update();
+  }
+  SlideEngine.prototype.buildChrome = function() {
+    var dots = document.createElement('div'); dots.className = 'deck-dots';
+    var self = this;
+    this.slides.forEach(function(_, i) { var d = document.createElement('button'); d.className = 'deck-dot'; d.setAttribute('aria-label','Slide '+(i+1)); d.onclick = function(){ self.goTo(i); }; dots.appendChild(d); });
+    document.body.appendChild(dots); this.dots = [].slice.call(dots.children);
+    var ctr = document.createElement('div'); ctr.className = 'deck-counter'; document.body.appendChild(ctr); this.counter = ctr;
+    var hints = document.createElement('div'); hints.className = 'deck-hints'; hints.textContent = '\u2190 \u2192 or scroll to navigate'; document.body.appendChild(hints); this.hints = hints;
+    this.hintTimer = setTimeout(function(){ hints.classList.add('faded'); }, 4000);
+  };
+  SlideEngine.prototype.bindEvents = function() {
+    var self = this;
+    document.addEventListener('keydown', function(e) {
+      if (e.target.closest('input,textarea,[contenteditable]')) return;
+      if (['ArrowDown','ArrowRight',' ','PageDown'].indexOf(e.key) > -1) { e.preventDefault(); self.next(); }
+      else if (['ArrowUp','ArrowLeft','PageUp'].indexOf(e.key) > -1) { e.preventDefault(); self.prev(); }
+      else if (e.key==='Home') { e.preventDefault(); self.goTo(0); }
+      else if (e.key==='End') { e.preventDefault(); self.goTo(self.total-1); }
+      self.fadeHints();
+    });
+    var tY; this.deck.addEventListener('touchstart', function(e){ tY=e.touches[0].clientY; },{passive:true});
+    this.deck.addEventListener('touchend', function(e){ var dy=tY-e.changedTouches[0].clientY; if(Math.abs(dy)>50){dy>0?self.next():self.prev();} });
+  };
+  SlideEngine.prototype.observe = function() {
+    var self = this;
+    var obs = new IntersectionObserver(function(entries){ entries.forEach(function(entry){ if(entry.isIntersecting){ entry.target.classList.add('visible'); self.current=self.slides.indexOf(entry.target); self.update(); } }); },{threshold:0.5});
+    this.slides.forEach(function(s){ obs.observe(s); });
+  };
+  SlideEngine.prototype.goTo = function(i){ this.slides[Math.max(0,Math.min(i,this.total-1))].scrollIntoView({behavior:'smooth'}); };
+  SlideEngine.prototype.next = function(){ if(this.current<this.total-1) this.goTo(this.current+1); };
+  SlideEngine.prototype.prev = function(){ if(this.current>0) this.goTo(this.current-1); };
+  SlideEngine.prototype.update = function(){
+    var c=this.current; this.dots.forEach(function(d,i){ d.classList.toggle('active',i===c); });
+    this.counter.textContent=(this.current+1)+' / '+this.total;
+    var slide=this.slides[c]; var isHero=slide.classList.contains('slide--hero')||slide.classList.contains('slide--divider');
+    document.body.classList.toggle('current-hero',isHero);
+  };
+  SlideEngine.prototype.fadeHints = function(){ clearTimeout(this.hintTimer); this.hints.classList.add('faded'); };
+  document.addEventListener('DOMContentLoaded', function(){ new SlideEngine(); });
+</script>
+</body>
+</html>
