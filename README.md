@@ -50,22 +50,20 @@ Plain markdown works fine:
 ## Install
 
 ```bash
-npx skills add lexanderg/fire-presentations
+npx skills add orchestratedbyalex/fire-presentations
 ```
 
 That's it. The skill is added to your Claude Code setup and `/fire-presentations` is available straight away.
 
-## Usage
+To install manually, clone this repo into your skills directory instead:
 
-Or install manually by adding this to your `settings.json`:
-
-```json
-"plugins": [
-  { "source": "github", "repo": "lexanderg/fire-presentations" }
-]
+```bash
+git clone https://github.com/orchestratedbyalex/fire-presentations.git ~/.claude/skills/fire-presentations
 ```
 
-Then invoke it with `/fire-presentations` followed by a path to your markdown file, or just run `/fire-presentations` and it will ask.
+## Usage
+
+Invoke it with `/fire-presentations` followed by a path to your markdown file, or just run `/fire-presentations` and it will ask.
 
 ## Files
 
